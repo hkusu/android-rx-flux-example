@@ -16,23 +16,23 @@ public class MainStore extends Store {
     MainStore(Dispatcher dispatcher) {
         super(dispatcher);
 
-        observe(MainAction.COUNT_UP, action -> {
+        on(MainAction.COUNT_UP, action -> {
             count += (Integer) action.value;
         });
 
-        observe(MainAction.COUNT_DOWN, action -> {
+        on(MainAction.COUNT_DOWN, action -> {
             count -= (Integer) action.value;
         });
 
-        observe(MainAction.STORE_MESSAGE, action -> {
+        on(MainAction.STORE_MESSAGE, action -> {
             message = (String) action.value;
         });
 
-        observe(MainAction.STORE_INITIALIZED, action -> {
+        on(MainAction.STORE_INITIALIZED, action -> {
             initialized = (boolean) action.value;
         });
 
-        observe(MainAction.POST_STORE_CHANGE_ONLY, action -> {
+        on(MainAction.POST_STORE_CHANGE_ONLY, action -> {
         });
     }
 

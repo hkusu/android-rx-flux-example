@@ -20,20 +20,20 @@ public class MainActionCreator extends ActionCreator {
     }
 
     void countUp(int num) {
-        post(MainAction.COUNT_UP, num);
+        dispatch(MainAction.COUNT_UP, num);
     }
 
     void countDown(int num) {
-        post(MainAction.COUNT_DOWN, num);
+        dispatch(MainAction.COUNT_DOWN, num);
     }
 
     void initView() {
         someRepository.getMessage()
-                .doOnNext(aString -> post(MainAction.STORE_MESSAGE, aString, Action.PostStoreChange.FALSE))
-                .doOnNext(aString -> post(MainAction.STORE_INITIALIZED, true, Action.PostStoreChange.FALSE))
+                .doOnNext(aString -> dispatch(MainAction.STORE_MESSAGE, aString, Action.PostStoreChange.FALSE))
+                .doOnNext(aString -> dispatch(MainAction.STORE_INITIALIZED, true, Action.PostStoreChange.FALSE))
                 .subscribeOn(Schedulers.io())
                 .subscribe(aString -> {
-                    post(MainAction.POST_STORE_CHANGE_ONLY, null);
+                    dispatch(MainAction.POST_STORE_CHANGE_ONLY, null);
                 });
     }
 }
