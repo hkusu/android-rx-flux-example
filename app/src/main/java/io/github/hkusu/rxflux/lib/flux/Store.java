@@ -41,7 +41,8 @@ public abstract class Store {
                 .doOnNext(action)
                 .subscribeOn(Schedulers.io())
                 .subscribe(action2 -> {
-                    if (action2.postStoreChange == Action.PostStoreChange.TRUE) {
+                    if (action2.notifyStoreChanged == Action.NotifyStoreChanged.TRUE) {
+                        // Storeの変更を通知
                         subject.onNext(action2);
                     }
                 });

@@ -29,11 +29,11 @@ public class MainActionCreator extends ActionCreator {
 
     void initView() {
         someRepository.getMessage()
-                .doOnNext(aString -> dispatch(MainAction.STORE_MESSAGE, aString, Action.PostStoreChange.FALSE))
-                .doOnNext(aString -> dispatch(MainAction.STORE_INITIALIZED, true, Action.PostStoreChange.FALSE))
+                .doOnNext(aString -> dispatch(MainAction.STORE_MESSAGE, aString, Action.NotifyStoreChanged.FALSE))
+                .doOnNext(aString -> dispatch(MainAction.STORE_INITIALIZED, true, Action.NotifyStoreChanged.FALSE))
                 .subscribeOn(Schedulers.io())
                 .subscribe(aString -> {
-                    dispatch(MainAction.POST_STORE_CHANGE_ONLY, null);
+                    dispatch(MainAction.NOTIFY_STORE_CHANGED, null);
                 });
     }
 }

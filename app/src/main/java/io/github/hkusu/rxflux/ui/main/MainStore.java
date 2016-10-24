@@ -32,7 +32,7 @@ public class MainStore extends Store {
             initialized = (boolean) action.value;
         });
 
-        on(MainAction.POST_STORE_CHANGE_ONLY, action -> {
+        on(MainAction.NOTIFY_STORE_CHANGED, action -> {
         });
     }
 

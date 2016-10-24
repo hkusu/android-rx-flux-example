@@ -6,16 +6,16 @@ import android.support.annotation.Nullable;
 public class Action {
     public final String key;
     public final Object value;
-    final PostStoreChange postStoreChange;
+    final NotifyStoreChanged notifyStoreChanged;
 
-    public enum PostStoreChange {
+    public enum NotifyStoreChanged {
         TRUE,
         FALSE,
     }
 
-    Action(@NonNull String key, @Nullable Object value, @NonNull PostStoreChange postStoreChange) {
+    Action(@NonNull String key, @Nullable Object value, @NonNull NotifyStoreChanged notifyStoreChanged) {
         this.key = key;
         this.value = value;
-        this.postStoreChange = postStoreChange;
+        this.notifyStoreChanged = notifyStoreChanged;
     }
 }
