@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.github.hkusu.rxflux.lib.flux.Dispatcher;
 
 @Singleton
 @Module
@@ -20,5 +21,11 @@ public class AppModule {
     @Singleton
     public Application application() {
         return application;
+    }
+
+    @Provides
+    @Singleton
+    public Dispatcher dispatcher() {
+        return new Dispatcher();
     }
 }
