@@ -1,7 +1,6 @@
 package io.github.hkusu.rxflux.ui.main;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import io.github.hkusu.rxflux.lib.flux.Action;
 import io.github.hkusu.rxflux.lib.flux.ActionCreator;
@@ -9,7 +8,6 @@ import io.github.hkusu.rxflux.lib.flux.Dispatcher;
 import io.github.hkusu.rxflux.model.repository.SomeRepository;
 import rx.schedulers.Schedulers;
 
-@Singleton
 public class MainActionCreator extends ActionCreator {
     private SomeRepository someRepository;
 
