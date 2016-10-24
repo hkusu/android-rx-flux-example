@@ -4,9 +4,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 public abstract class ActionCreator {
-    private Dispatcher dispatcher;
+    private final Dispatcher dispatcher;
 
-    public ActionCreator(@NonNull Dispatcher dispatcher) {
+    protected ActionCreator(@NonNull Dispatcher dispatcher) {
         this.dispatcher = dispatcher;
     }
 

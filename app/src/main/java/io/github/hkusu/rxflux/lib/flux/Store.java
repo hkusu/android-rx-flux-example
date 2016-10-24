@@ -14,10 +14,10 @@ import rx.subscriptions.CompositeSubscription;
 
 public abstract class Store {
     private final Subject<Action, Action> subject = new SerializedSubject<>(PublishSubject.create());
-    private Dispatcher dispatcher;
+    private final Dispatcher dispatcher;
     private final CompositeSubscription cs;
 
-    public Store(@NonNull Dispatcher dispatcher) {
+    protected Store(@NonNull Dispatcher dispatcher) {
         this.dispatcher = dispatcher;
         cs = new CompositeSubscription();
     }
@@ -54,7 +54,7 @@ public abstract class Store {
     }
 
     // ２度とaddできなくなるので注意
-    public void unsubscribe() {
+    public final void unsubscribe() {
         if (!cs.isUnsubscribed()) {
             cs.unsubscribe();
         }

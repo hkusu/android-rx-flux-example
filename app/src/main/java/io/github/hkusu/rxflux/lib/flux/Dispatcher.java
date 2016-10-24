@@ -8,14 +8,14 @@ import rx.subjects.SerializedSubject;
 import rx.subjects.Subject;
 
 @Singleton
-public class Dispatcher {
+public final class Dispatcher {
     private final Subject<Action, Action> subject = new SerializedSubject<>(PublishSubject.create());
 
     @Inject
-    public Dispatcher() {
+    Dispatcher() {
     }
 
-    Subject<Action, Action> getSubject() {
+    final Subject<Action, Action> getSubject() {
         return subject;
     }
 }
