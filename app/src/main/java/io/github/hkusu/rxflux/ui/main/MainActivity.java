@@ -11,8 +11,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.github.hkusu.rxflux.R;
-import io.github.hkusu.rxflux.RxFluxApplication;
 import io.github.hkusu.rxflux.di.AppComponent;
+import io.github.hkusu.rxflux.ui.RxFluxApplication;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.messageText)

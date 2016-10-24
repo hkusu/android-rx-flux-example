@@ -1,4 +1,4 @@
-package io.github.hkusu.rxflux;
+package io.github.hkusu.rxflux.ui;
 
 import javax.inject.Inject;
 

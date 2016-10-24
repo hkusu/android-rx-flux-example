@@ -5,7 +5,7 @@
     >
 
     <application
-        android:name=".RxFluxApplication"
+        android:name=".ui.RxFluxApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
