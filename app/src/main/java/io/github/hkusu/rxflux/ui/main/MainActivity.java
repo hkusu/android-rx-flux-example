@@ -12,6 +12,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.github.hkusu.rxflux.R;
 import io.github.hkusu.rxflux.di.AppComponent;
+import io.github.hkusu.rxflux.lib.flux.Action;
 import io.github.hkusu.rxflux.ui.RxFluxApplication;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,11 +49,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @MainThread
-    private void updateUI() {
+    private void updateUI(Action action) {
         if (isDestroyed()) {
             return;
         }
-        // NOTE: パフォーマンスが気になる場合は前状態と比較の上で更新した方がいいかもしれない
+        // NOTE: パフォーマンスが気になる場合はactionで場合分けしたり前状態と比較の上で更新したりした方がいいかもしれない
         countText.setText(mainStore.getCount().toString());
         messageText.setText(mainStore.getMessage());
     }
@@ -63,13 +64,13 @@ public class MainActivity extends AppCompatActivity {
 
         mainStore.observe(action -> {
             // Log.d("posted action:", action.key);
-            updateUI();
+            updateUI(action);
         });
 
         if (!mainStore.isInitialized()) {
             mainActionCreator.initView();
         } else {
-            updateUI();
+            updateUI(null);
             // ActionCreator経由だと直前行の購読開始がタイミング的に間に合わないケースがあったので
         }
     }
