@@ -59,20 +59,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if (!mainStore.isInitialized()) {
+            mainActionCreator.initialize();
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-
         mainStore.observeOnMainThread(action -> {
             // Log.d("posted action:", action.key);
             updateUI(action);
         });
-
-        if (!mainStore.isInitialized()) {
-            mainActionCreator.initialize();
-        } else {
-            updateUI(null);
-            // ActionCreator経由だと直前行の購読開始がタイミング的に間に合わないケースがあったので
-        }
     }
 
     @Override

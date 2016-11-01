@@ -7,13 +7,13 @@ import java.util.Objects;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-import rx.subjects.PublishSubject;
+import rx.subjects.BehaviorSubject;
 import rx.subjects.SerializedSubject;
 import rx.subjects.Subject;
 import rx.subscriptions.CompositeSubscription;
 
 public abstract class Store implements Action.Key {
-    private final Subject<Action, Action> storeSubject = new SerializedSubject<>(PublishSubject.create());
+    private final Subject<Action, Action> storeSubject = new SerializedSubject<>(BehaviorSubject.create()); // Use BehaviorSubject to subscribe Store
     private final Dispatcher dispatcher;
     private final CompositeSubscription cs;
 
