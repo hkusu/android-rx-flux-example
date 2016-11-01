@@ -12,8 +12,8 @@ import rx.subjects.SerializedSubject;
 import rx.subjects.Subject;
 import rx.subscriptions.CompositeSubscription;
 
-public abstract class Store {
-    private final Subject<Action, Action> subject = new SerializedSubject<>(PublishSubject.create());
+public abstract class Store implements Action.Key {
+    private final Subject<Action, Action> storeSubject = new SerializedSubject<>(PublishSubject.create());
     private final Dispatcher dispatcher;
     private final CompositeSubscription cs;
 
@@ -23,11 +23,11 @@ public abstract class Store {
     }
 
     // UI層(Activity/Fragment等)でのStore(データ変更イベント)の購読
-    public final void observe(@NonNull Action1<Action> action) {
-        cs.add(this.subject
+    public final void observeOnMainThread(@NonNull Action1<Action> rxAction) {
+        cs.add(this.storeSubject
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()) // Mainスレッドで購読
-                .subscribe(action)
+                .subscribe(rxAction)
         );
     }
 
@@ -35,15 +35,15 @@ public abstract class Store {
     // 現状ではunSubscribeしないもののとする(やろうと思えばActivityが破棄されててもStoreの更新が可能)
     // また現状ではStoreはシングルトンでActivityが破棄されても生存し続け再利用される
     // (辞めたい場合はDaggerの@Singletonアノテーションを外しCompositeSubscriptionで管理)
-    protected final <T> void on(@NonNull T key, @NonNull Action1<Action> action) {
+    protected final void on(@NonNull Action.Key key, @NonNull Action1<Action> rxAction) {
         this.dispatcher.getSubject()
                 .filter(fluxAction -> Objects.equals(fluxAction.key, key))
-                .doOnNext(action)
+                .doOnNext(rxAction)
                 .subscribeOn(Schedulers.io())
-                .subscribe(action2 -> {
-                    if (action2.notifyStoreChanged == NotifyStoreChanged.TRUE) {
+                .subscribe(fluxAction -> {
+                    if (fluxAction.notifyStoreChanged) {
                         // Storeの変更を通知
-                        subject.onNext(action2);
+                        storeSubject.onNext(fluxAction);
                     }
                 });
     }

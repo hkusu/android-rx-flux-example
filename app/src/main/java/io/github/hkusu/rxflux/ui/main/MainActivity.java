@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private void initDependencies() {
         AppComponent appComponent = ((RxFluxApplication) getApplication()).getAppComponent();
         mainStore = appComponent.mainStore();
-        mainActionCreator = appComponent.mainAction();
+        mainActionCreator = appComponent.mainActionCreator();
     }
 
     private void setupView() {
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        mainStore.observe(action -> {
+        mainStore.observeOnMainThread(action -> {
             // Log.d("posted action:", action.key);
             updateUI(action);
         });
