@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (!mainStore.isInitialized()) {
-            mainActionCreator.initView();
+            mainActionCreator.initialize();
         } else {
             updateUI(null);
             // ActionCreator経由だと直前行の購読開始がタイミング的に間に合わないケースがあったので

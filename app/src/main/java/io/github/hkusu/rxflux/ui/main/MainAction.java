@@ -7,5 +7,4 @@ enum MainAction implements Action.Key {
     COUNT_DOWN,
     STORE_MESSAGE,
     STORE_INITIALIZED,
-    NOTIFY_STORE_CHANGED,
 }

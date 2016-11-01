@@ -24,13 +24,12 @@ public class MainActionCreator extends ActionCreator {
         dispatch(MainAction.COUNT_DOWN, num);
     }
 
-    void initView() {
+    void initialize() {
         someRepository.getMessage()
                 .doOnNext(aString -> dispatchSkipNotify(MainAction.STORE_MESSAGE, aString))
-                .doOnNext(aString -> dispatchSkipNotify(MainAction.STORE_INITIALIZED, true))
                 .subscribeOn(Schedulers.io())
                 .subscribe(aString -> {
-                    dispatch(MainAction.NOTIFY_STORE_CHANGED, null);
+                    dispatch(MainAction.STORE_INITIALIZED, true);
                 });
     }
 }

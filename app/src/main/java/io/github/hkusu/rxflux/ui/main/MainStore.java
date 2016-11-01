@@ -31,9 +31,6 @@ public class MainStore extends Store {
         on(MainAction.STORE_INITIALIZED, action -> {
             initialized = (boolean) action.value;
         });
-
-        on(MainAction.NOTIFY_STORE_CHANGED, action -> {
-        });
     }
 
     boolean isInitialized() {
