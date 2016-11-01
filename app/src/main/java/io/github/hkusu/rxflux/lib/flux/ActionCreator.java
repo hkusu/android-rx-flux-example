@@ -10,11 +10,11 @@ public abstract class ActionCreator {
         this.dispatcher = dispatcher;
     }
 
-    protected final <T> void dispatch(@NonNull String key, @Nullable T value) {
+    protected final <T1, T2> void dispatch(@NonNull T1 key, @Nullable T2 value) {
         dispatch(key, value, Action.NotifyStoreChanged.TRUE);
     }
 
-    protected final <T> void dispatch(@NonNull String key, @Nullable T value, @NonNull Action.NotifyStoreChanged notifyStoreChanged) {
+    protected final <T1, T2> void dispatch(@NonNull T1 key, @Nullable T2 value, @NonNull Action.NotifyStoreChanged notifyStoreChanged) {
         this.dispatcher.getSubject().onNext(new Action<>(key, value, notifyStoreChanged));
     }
 }

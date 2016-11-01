@@ -35,7 +35,7 @@ public abstract class Store {
     // 現状ではunSubscribeしないもののとする(やろうと思えばActivityが破棄されててもStoreの更新が可能)
     // また現状ではStoreはシングルトンでActivityが破棄されても生存し続け再利用される
     // (辞めたい場合はDaggerの@Singletonアノテーションを外しCompositeSubscriptionで管理)
-    protected final void on(@NonNull String key, @NonNull Action1<Action> action) {
+    protected final <T> void on(@NonNull T key, @NonNull Action1<Action> action) {
         this.dispatcher.getSubject()
                 .filter(fluxAction -> Objects.equals(fluxAction.key, key))
                 .doOnNext(action)
