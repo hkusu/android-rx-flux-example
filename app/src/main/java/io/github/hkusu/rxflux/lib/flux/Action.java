@@ -8,11 +8,6 @@ public class Action<T1, T2> {
     public final T2 value;
     final NotifyStoreChanged notifyStoreChanged;
 
-    public enum NotifyStoreChanged {
-        TRUE,
-        FALSE,
-    }
-
     Action(@NonNull T1 key, @Nullable T2 t, @NonNull NotifyStoreChanged notifyStoreChanged) {
         this.key = key;
         this.value = t;
