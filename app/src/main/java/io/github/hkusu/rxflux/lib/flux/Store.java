@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.util.Objects;
 
+import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -22,13 +23,22 @@ public abstract class Store implements Action.Key {
         cs = new CompositeSubscription();
     }
 
-    // UI層(Activity/Fragment等)でのStore(データ変更イベント)の購読
-    public final void observeOnMainThread(@NonNull Action1<Action> rxAction) {
+    private void observe(@NonNull Scheduler scheduler, @NonNull Action1<Action> rxAction) {
         cs.add(this.storeSubject
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()) // Mainスレッドで購読
+                .observeOn(scheduler)
                 .subscribe(rxAction)
         );
+    }
+
+    // UI層(Activity/Fragment等)でのStore変更イベントの購読
+    public final void observeOnMainThread(@NonNull Action1<Action> rxAction) {
+        observe(AndroidSchedulers.mainThread(), rxAction);
+    }
+
+    // 非UI層(Activity/Fragment等)でのStore変更イベントの購読
+    public final void observeOnBackgroundThread(@NonNull Action1<Action> rxAction) {
+        observe(Schedulers.io(), rxAction);
     }
 
     // StoreでのDispatcherのsubject(アクションイベント)の購読
