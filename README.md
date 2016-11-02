@@ -7,6 +7,10 @@
 ![Flux](flux.png)
 > https://facebook.github.io/flux/docs/overview.html
 
+## Document
+
+- [Android で RxJava を利用して Flux してみた](http://qiita.com/hkusu/items/64a9435e1613e4c20ba7)
+
 ## Using library
 
 - [Dagger 2 (ver 2.7)](https://github.com/google/dagger)
