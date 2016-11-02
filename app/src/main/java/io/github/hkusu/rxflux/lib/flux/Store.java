@@ -52,7 +52,7 @@ public abstract class Store implements Action.Key {
     // また現状ではStoreはシングルトンでActivityが破棄されても生存し続け再利用される
     // (辞めたい場合はDaggerの@Singletonアノテーションを外しCompositeSubscriptionで管理)
     protected final void on(@NonNull Action.Key key, @NonNull Action1<Action> rxAction) {
-        this.dispatcher.getSubject()
+        this.dispatcher.observable()
                 .filter(fluxAction -> Objects.equals(fluxAction.key, key))
                 .doOnNext(rxAction)
                 .subscribeOn(Schedulers.io())
