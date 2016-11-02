@@ -3,8 +3,6 @@ package io.github.hkusu.rxflux.lib.flux;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.Objects;
-
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -52,9 +50,7 @@ public abstract class Store implements Action.Key {
     // また現状ではStoreはシングルトンでActivityが破棄されても生存し続け再利用される
     // (辞めたい場合はDaggerの@Singletonアノテーションを外しCompositeSubscriptionで管理)
     protected final void on(@NonNull Action.Key key, @NonNull Action1<Action> rxAction) {
-        this.dispatcher.observable()
-                .filter(fluxAction -> Objects.equals(fluxAction.key, key))
-                .doOnNext(rxAction)
+        dispatcher.on(key, rxAction)
                 .subscribeOn(Schedulers.io())
                 .subscribe(fluxAction -> {
                     if (fluxAction.notifyStoreChanged) {
