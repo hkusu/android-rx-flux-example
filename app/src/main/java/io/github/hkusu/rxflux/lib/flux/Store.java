@@ -1,6 +1,7 @@
 package io.github.hkusu.rxflux.lib.flux;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.Objects;
 
@@ -41,6 +42,11 @@ public abstract class Store implements Action.Key {
         observe(Schedulers.io(), rxAction);
     }
 
+    // MEMO: 念のため外部からも叩けるようpublic
+    public final void notifyStoreChanged(@Nullable Action fluxAction) {
+        storeSubject.onNext(fluxAction);
+    }
+
     // StoreでのDispatcherのsubject(アクションイベント)の購読
     // 現状ではunSubscribeしないもののとする(やろうと思えばActivityが破棄されててもStoreの更新が可能)
     // また現状ではStoreはシングルトンでActivityが破棄されても生存し続け再利用される
@@ -53,7 +59,7 @@ public abstract class Store implements Action.Key {
                 .subscribe(fluxAction -> {
                     if (fluxAction.notifyStoreChanged) {
                         // Storeの変更を通知
-                        storeSubject.onNext(fluxAction);
+                        notifyStoreChanged(fluxAction);
                     }
                 });
     }

@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 
 import io.github.hkusu.rxflux.lib.flux.Dispatcher;
 import io.github.hkusu.rxflux.lib.flux.Store;
+import io.github.hkusu.rxflux.ui.AppStore;
 
 @Singleton
 public class MainStore extends Store {
@@ -13,7 +14,7 @@ public class MainStore extends Store {
     private boolean initialized = false;
 
     @Inject
-    MainStore(Dispatcher dispatcher) {
+    MainStore(Dispatcher dispatcher, AppStore appStore) {
         super(dispatcher);
 
         on(MainAction.COUNT_UP, action -> {
@@ -30,6 +31,11 @@ public class MainStore extends Store {
 
         on(MainAction.STORE_INITIALIZED, action -> {
             initialized = (boolean) action.value;
+        });
+
+        appStore.observeOnBackgroundThread(action -> {
+            // do something ...
+            notifyStoreChanged(action);
         });
     }
 
