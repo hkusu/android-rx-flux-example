@@ -11,10 +11,11 @@ public abstract class ActionCreator {
     }
 
     protected final <T> void dispatch(@NonNull Action.Key key, @Nullable T value) {
-        this.dispatcher.getSubject().onNext(new Action<>(key, value, true));
+        this.dispatcher.dispatch(new Action<>(key, value, true));
     }
 
     protected final <T> void dispatchSkipNotify(@NonNull Action.Key key, @Nullable T value) {
-        this.dispatcher.getSubject().onNext(new Action<>(key, value, false));
+        this.dispatcher.dispatch(new Action<>(key, value, false));
+
     }
 }
