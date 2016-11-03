@@ -4,6 +4,8 @@
     package="io.github.hkusu.rxflux"
     >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".ui.RxFluxApplication"
         android:allowBackup="false"
